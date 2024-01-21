@@ -303,20 +303,16 @@
       } else { year = parseInt(year); }
 
 
-      let mydate = new Date(year, month - 1, day);
-     console.log(mydate.getFullYear());
-     console.log(mydate.getMonth());
-     console.log(mydate.getDate());
 
       if (flag == true) {
-        if (mydate.getFullYear() < 1925 || mydate.getFullYear() > 2025) {
+        if (year < 1925 || year > 2025) {
           labelYear.style.color = "var(--clr-error)";
           errorYear.classList.add("show-msg");
           inputYear.style.borderColor = "var(--clr-error)";
           errorYear.innerHTML = 'Must be a valid Year!';
           flag = false;
         }
-        if (mydate.getMonth() < 0 || mydate.getMonth() > 13) {
+        if (month <= 0 || month > 12) {
           labelMonth.style.color = "var(--clr-error)";
           errorMonth.classList.add("show-msg");
           inputMonth.style.borderColor = "var(--clr-error)";
@@ -324,7 +320,7 @@
           console.log(mydate.getMonth());
           flag = false;
         }
-        if (mydate.getDate() < 0 || mydate.getDate() > 32) {
+        if (day <= 0 || day > 31) {
           labelDay.style.color = "var(--clr-error)";
           errorDay.classList.add("show-msg");
           inputDay.style.borderColor = "var(--clr-error)";
@@ -334,6 +330,7 @@
         
       }
 
+      let mydate = new Date(year, month - 1, day);
       if (flag == true) {
         if (
           isNaN(mydate.getTime()) ||
