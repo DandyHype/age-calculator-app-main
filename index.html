@@ -317,7 +317,6 @@
           errorMonth.classList.add("show-msg");
           inputMonth.style.borderColor = "var(--clr-error)";
           errorMonth.innerHTML = 'Must be a valid Month!';
-          console.log(mydate.getMonth());
           flag = false;
         }
         if (day <= 0 || day > 31) {
@@ -326,6 +325,7 @@
           inputDay.style.borderColor = "var(--clr-error)";
           errorDay.innerHTML = 'Must be a valid Day!';
           flag = false;
+          console.log("flag");
         }
         
       }
