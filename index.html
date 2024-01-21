@@ -1,37 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
+
   <title>Frontend Mentor | Age calculator app</title>
 
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
+    @font-face {
+      font-family: Poppins;
+      src: url(./assets/fonts/Poppins-Italic.ttf) format('truetype');
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: Poppins;
+      src: url(./assets/fonts/Poppins-Bold.ttf) format('truetype');
+      font-weight: 700;
+    }
+
+    @font-face {
+      font-family: Poppins;
+      src: url(./assets/fonts/Poppins-ExtraBoldItalic.ttf) format('truetype');
+      font-weight: 800;
+    }
+
+    :root {
+      --clr-primary: hsl(259, 100%, 65%);
+      --clr-error: hsl(0, 100%, 67%);
+
+      --clr-neutral-100: hsl(0, 0%, 100%);
+      --clr-neutral-200: hsl(0, 0%, 94%);
+      --clr-neutral-300: hsl(0, 0%, 86%);
+      --clr-neutral-600: hsl(0, 1%, 44%);
+      --clr-neutral-800: hsl(0, 0%, 8%);
+
+      --fnt-main: Poppins, sans-arial;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--fnt-main);
+      background-color: var(--clr-neutral-200);
+    }
+
+    .main__container {
+      padding: 3rem;
+      display: grid;
+      gap: 2rem;
+      width: 40%;
+      min-width: 800px;
+      background-color: var(--clr-neutral-100);
+      margin: 10rem auto;
+      border-radius: 1rem 1rem 10rem 1rem;
+
+    }
+
+    .container__form {
+      position: relative;
+      padding-bottom: 3rem;
+      padding-right: 10rem;
+      border-bottom: 1px solid var(--clr-neutral-300);
+    }
+
+    form {
+      display: flex;
+      gap: 2rem;
+    }
+
+    form div {
+      display: grid;
+      gap: .4rem
+    }
+
+    div label {
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: .1rem;
+      color: var(--clr-neutral-600);
+      text-transform: uppercase;
+    }
+
+    div input {
+      cursor: pointer;
+      font-size: 2rem;
+      line-height: 4rem;
+      font-weight: 700;
+      color: var(--clr-neutral-800);
+      padding-left: 1rem;
+      min-width: 0;
+      border: 2px solid var(--clr-neutral-300);
+      border-radius: 0.5rem;
+    }
+
+    input:focus {
+      border: 2px solid var(--clr-primary);
+      outline: none;
+      caret-color: var(--clr-primary);
+    }
+
+    input::placeholder {
+      font-family: var(--fnt-main);
+      font-size: 2rem;
+      line-height: 4rem;
+      font-weight: 700;
+      color: var(--clr-neutral-600);
+    }
+
+    .error__message {
+      visibility: hidden;
+      font-size: 0.725rem;
+      font-weight: 400;
+      color: var(--clr-error);
+    }
+
+    .show-msg {
+      visibility: visible;
+    }
+
+    button {
+      position: absolute;
+      content: '';
+      width: 92px;
+      height: 88px;
+      right: 0;
+      bottom: -44px;
+      cursor: pointer;
+      border: none;
+      background-image: url("./assets/images/icon-arrow.svg");
+      background-repeat: no-repeat;
+      background-size: 50%;
+      background-position: 47% 50%;
+      background-color: var(--clr-primary);
+
+      border-radius: 50%;
+    }
+
+    button:hover {
+      background-color: var(--clr-neutral-800);
+    }
+
+    .container__result {
+      font-size: 6.5rem;
+      line-height: 7rem;
+      font-weight: 800;
+      color: var(--clr-neutral-800);
+    }
+
+    span {
+      color: var(--clr-primary);
+    }
+
+    @media (max-width: 900px) {
+
+      .main__container {
+        padding: 4rem 1.5rem;
+        gap: 4rem;
+        width: 90%;
+        min-width: 350px;
+
+      }
+
+      .container__form {
+        padding-bottom: 5rem;
+        padding-right: 0;
+      }
+
+      button {
+
+        width: 46px;
+        height: 44px;
+        bottom: -22px;
+        right: calc(50% - 23px);
+      }
+
+      .container__result {
+        font-size: 4.5rem;
+        line-height: 5rem;
+        font-weight: 800;
+        color: var(--clr-neutral-800);
+      }
+
+    }
+
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
   </style>
 </head>
+
 <body>
 
-  Day
-  DD
+  <main class="main__container">
+    <div class="container__form">
+      <form action="">
+        <div><label for="day">Day</label><input type="text" maxlength="2" placeholder="DD"><span
+            class="error__message">This field is required</span></div>
+        <div><label for="month">Month</label><input type="text" maxlength="2" placeholder="MM"><span
+            class="error__message">This field is required</span></div>
+        <div><label for="year">Year</label><input type="text" maxlength="4" placeholder="YYYY"><span
+            class="error__message">This field is required</span></div>
+        <button type="button"></button>
+      </form>
+    </div>
+    <div class="container__result">
+      <p id="years"><span>--</span>years</p>
+      <p id="months"><span>--</span>months</p>
+      <p id="days"><span>--</span>days</p>
+    </div>
+  </main>
 
-  Month
-  MM
-
-  Year
-  YYYY
-
-  -- years
-  -- months
-  -- days
-  
   <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
     Coded by <a href="#">Your Name Here</a>.
   </div>
+
+  <script>
+
+
+    const labelDay = document.querySelector('label[for="day"]');
+    const labelMonth = document.querySelector('label[for="month"]');
+    const labelYear = document.querySelector('label[for="year"]');
+
+    const errorDay = document.querySelector('label[for="day"] ~ span');
+    const errorMonth = document.querySelector('label[for="month"] ~ span');
+    const errorYear = document.querySelector('label[for="year"] ~ span');
+
+    const inputDay = document.querySelector('label[for="day"] + input');
+    const inputMonth = document.querySelector('label[for="month"] + input');
+    const inputYear = document.querySelector('label[for="year"] + input');
+
+    const resultDays = document.querySelector('#days');
+    const resultMonths = document.querySelector('#months');
+    const resultYears = document.querySelector('#years');
+
+    const button = document.querySelector('button');
+
+
+
+    // 
+
+
+    let day = 0;
+    let month = 0;
+    let year = 0;
+
+
+    button.addEventListener('click', function (event) {
+      day = inputDay.value;
+      month = inputMonth.value;
+      year = inputYear.value;
+      let flag = true;
+
+      // Resets Errors
+
+      labelDay.style.color = "var(--clr-neutral-800)";
+      labelMonth.style.color = "var(--clr-neutral-800)";
+      labelYear.style.color = "var(--clr-neutral-800)";
+      errorDay.classList.remove("show-msg");
+      errorMonth.classList.remove("show-msg");
+      errorYear.classList.remove("show-msg");
+      inputYear.style.borderColor = "var(--clr-neutral-300)";
+      inputMonth.style.borderColor = "var(--clr-neutral-300)";
+      inputDay.style.borderColor = "var(--clr-neutral-300)";
+
+      // Check if day/month/year have empty values
+      if (day == "") {
+        labelDay.style.color = "var(--clr-error)";
+        errorDay.classList.add("show-msg");
+        inputDay.style.borderColor = "var(--clr-error)";
+        errorDay.innerHTML = 'This field is required';
+        flag = false;
+      } else { day = parseInt(day); }
+      if (month == "") {
+        labelMonth.style.color = "var(--clr-error)";
+        errorMonth.classList.add("show-msg");
+        inputMonth.style.borderColor = "var(--clr-error)";
+        errorMonth.innerHTML = 'This field is required';
+        flag = false;
+      } else { month = parseInt(month); }
+      if (year == "") {
+        labelYear.style.color = "var(--clr-error)";
+        errorYear.classList.add("show-msg");
+        inputYear.style.borderColor = "var(--clr-error)";
+        errorYear.innerHTML = 'This field is required';
+        flag = false;
+      } else { year = parseInt(year); }
+
+
+      let mydate = new Date(year, month - 1, day);
+     console.log(mydate.getFullYear());
+     console.log(mydate.getMonth());
+     console.log(mydate.getDate());
+
+      if (flag == true) {
+        if (mydate.getFullYear() < 1925 || mydate.getFullYear() > 2025) {
+          labelYear.style.color = "var(--clr-error)";
+          errorYear.classList.add("show-msg");
+          inputYear.style.borderColor = "var(--clr-error)";
+          errorYear.innerHTML = 'Must be a valid Year!';
+          flag = false;
+        }
+        if (mydate.getMonth() < 0 || mydate.getMonth() > 13) {
+          labelMonth.style.color = "var(--clr-error)";
+          errorMonth.classList.add("show-msg");
+          inputMonth.style.borderColor = "var(--clr-error)";
+          errorMonth.innerHTML = 'Must be a valid Month!';
+          console.log(mydate.getMonth());
+          flag = false;
+        }
+        if (mydate.getDate() < 0 || mydate.getDate() > 32) {
+          labelDay.style.color = "var(--clr-error)";
+          errorDay.classList.add("show-msg");
+          inputDay.style.borderColor = "var(--clr-error)";
+          errorDay.innerHTML = 'Must be a valid Day!';
+          flag = false;
+        }
+        
+      }
+
+      if (flag == true) {
+        if (
+          isNaN(mydate.getTime()) ||
+          mydate.getFullYear() !== year ||
+          mydate.getMonth() !== month - 1 ||
+          mydate.getDate() !== day
+        ) {
+          labelDay.style.color = "var(--clr-error)";
+          errorDay.classList.add("show-msg");
+          labelMonth.style.color = "var(--clr-error)";
+          errorMonth.classList.remove("show-msg");
+          labelYear.style.color = "var(--clr-error)";
+          errorYear.classList.remove("show-msg");
+          errorDay.innerHTML = 'Must be a valid Date!';
+          inputYear.style.borderColor = "var(--clr-error)";
+          inputMonth.style.borderColor = "var(--clr-error)";
+          inputDay.style.borderColor = "var(--clr-error)";
+          flag = false;
+        }
+      }
+
+      let today = new Date();
+      if (flag == true) {
+        if (today < mydate) {
+          labelYear.style.color = "var(--clr-error)";
+          errorYear.classList.add("show-msg");
+          errorYear.innerHTML = 'Must be a in the past!';
+          flag = false;
+        }
+      }
+
+
+
+      if (flag == true) {
+        let ageInMilliseconds = today - mydate;
+        let ageInYears = Math.floor(ageInMilliseconds / (365.25 * 24 * 60 * 60 * 1000));
+        let remainingMilliseconds = ageInMilliseconds % (365.25 * 24 * 60 * 60 * 1000);
+        let ageInMonths = Math.floor(remainingMilliseconds / (30.44 * 24 * 60 * 60 * 1000));
+        let remainingDays = Math.floor(
+          (remainingMilliseconds % (30.44 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000)
+        );
+
+        resultYears.innerHTML = '<p id="years"><span>' + ageInYears + '</span> years</p>';
+        resultMonths.innerHTML = '<p id="years"><span>' + ageInMonths + '</span> months</p>';
+        resultDays.innerHTML = '<p id="years"><span>' + remainingDays + '</span> days</p>';
+      }
+
+
+    }
+
+    )
+
+
+
+
+
+  </script>
 </body>
+
 </html>
